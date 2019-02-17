@@ -7,7 +7,7 @@ PYTHON_MAKE_DIR = /tmp/py_make
 PYTHON_TAR_FILE_NAME = $(notdir $(PYTHON_DOWNLOAD_URL:'=))
 PYTHON_TAR_FILE_PATH = $(PYTHON_MAKE_DIR)/$(PYTHON_TAR_FILE_NAME)
 PYTHON_SOURCE_PATH = $(PYTHON_TAR_FILE_PATH:.tgz=)
-PYTHON_LOCAL_INSTALL_PATH ?= $(shell echo /home/`whoami`/py_$(PYTHON_VERSION)$(PYTHON_SUB_VERSION))
+PYTHON_INSTALL_PATH ?= $(shell echo /home/`whoami`/py_$(PYTHON_VERSION)$(PYTHON_SUB_VERSION))
 
 # =========================== DEFAULT BEHAVIOUR ================================
 all: download_and_extract configure_and_install clean
@@ -22,7 +22,7 @@ download_and_extract:
 
 .PHONY: configure_and_install
 configure_and_install:
-	cd $(PYTHON_SOURCE_PATH) && ./configure --prefix=$(PYTHON_LOCAL_INSTALL_PATH) --enable-optimizations
+	cd $(PYTHON_SOURCE_PATH) && ./configure --prefix=$(PYTHON_INSTALL_PATH) --enable-optimizations
 	cd $(PYTHON_SOURCE_PATH) && make
 	# even if `test` fails keep going
 	-cd $(PYTHON_SOURCE_PATH) && make test
