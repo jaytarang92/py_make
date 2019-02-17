@@ -1,4 +1,4 @@
-# Py_make | Python Makefile [![Build Status](https://travis-ci.org/jaytarang92/py_mak.svg?branch=master)](https://travis-ci.org/jaytarang92/py_make)
+# Py_make | Python Makefile [![Build Status](https://travis-ci.org/jaytarang92/py_make.svg?branch=master)](https://travis-ci.org/jaytarang92/py_make)
 
 Py_make is a Makefile that builds a python version you desire in a local work space.
 
