@@ -44,4 +44,4 @@ clean:
 	-rm -r /tmp/tmp* /tmp/py*
 
 .PHONY: travis_ci_test
-travis_ci_test: pre_clean download extract clean
+travis_ci_test: pre_clean download extract configure clean
