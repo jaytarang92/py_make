@@ -1,3 +1,3 @@
 language: C
 script: 
-  - make travis_ci_test PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/py_tmp_make_dir
+  - make travis_ci_test PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir
