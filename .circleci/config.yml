@@ -13,4 +13,4 @@ jobs:
       -
         run:
           name: 'Make Python'
-          command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
+          command: 'pwd && make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
