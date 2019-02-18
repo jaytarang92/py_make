@@ -14,3 +14,16 @@ jobs:
         run:
           name: 'Make Python'
           command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: /tmp/temp_py_make_dir
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            VERSION=$(python --version)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir
+
+
