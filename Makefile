@@ -47,5 +47,5 @@ clean:
 travis_ci_test: pre_clean download extract configure clean
 
 .PHONY: circle_ci_build
-travis_ci_test: pre_clean download extract configure install clean
+circle_ci_build: pre_clean download extract configure install clean
 
