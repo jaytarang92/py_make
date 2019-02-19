@@ -25,6 +25,7 @@ download:
 .PHONY: extract
 extract:
 	cd $(PYTHON_MAKE_DIR) && tar -xf $(PYTHON_TAR_FILE_PATH)
+	rm $(PYTHON_TAR_FILE_PATH)
 
 .PHONY: configure
 configure:
