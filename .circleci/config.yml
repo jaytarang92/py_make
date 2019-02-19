@@ -1,4 +1,4 @@
-version: 1
+version: 2
 jobs:
   build_python:
     docker:
@@ -24,7 +24,7 @@ jobs:
           at: /tmp/temp_py_make_dir
       - "run\nname: Publish to Github\ncommand: |\nVERSION=$(python --version)\nghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
 workflows:
-  version: 1
+  version: 2
   build:
     jobs:
       - build_python
