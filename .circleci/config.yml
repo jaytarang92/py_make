@@ -18,11 +18,7 @@ jobs:
         run:
           name: 'Setup Golang'
           command: |
-            mkdir -p /tmp/golang /tmp/golang/bin /tmp/golang/src /tmp/golang/pkg
-            export GOPATH=/tmp/golang
-            export GOBIN=$GOPATH/bin
-            export GOSRC=$GOPATH/src
-            export GOPKG=$GOPATH/pkg
+            mkdir -p ${GOPATH} ${GOBIN} ${GOPKG} ${GOSRC}
       -
         run:
           name: 'Build GHR'
