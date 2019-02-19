@@ -18,6 +18,7 @@ jobs:
         run:
           name: 'Publish to Github'
           command: |
+            mkdir -p /tmp/ghr_dl
             cd /tmp/ghr_dl
             wget https://github.com/tcnksm/ghr/releases/download/v0.12.0/ghr_v0.12.0_linux_amd64.tar.gz
             tar -xf ghr_v0.12.0_linux_amd64.tar.gz
