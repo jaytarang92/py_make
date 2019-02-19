@@ -23,7 +23,7 @@ jobs:
             wget https://github.com/tcnksm/ghr/releases/download/v0.12.0/ghr_v0.12.0_linux_amd64.tar.gz
             tar -xf ghr_v0.12.0_linux_amd64.tar.gz
             cd /tmp/temp_py_make_dir
-            VERSION=$(./python --version) 
+            VERSION=$(python --version) 
             cd /tmp/ghr_dl/ghr_v0.12.0_linux_amd64 && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
 workflows:
   version: 2
