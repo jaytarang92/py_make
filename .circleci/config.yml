@@ -26,7 +26,8 @@ jobs:
         run:
           name: 'Publish to Github'
           command: |
-          VERSION=$(python --version) ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
+            VERSION=$(python --version) 
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
 workflows:
   version: 2
   build:
