@@ -1,32 +1,31 @@
-version: 0.1
+version: 1
 jobs:
-  build:
+  build_python:
     docker:
-    - image: debian:stretch
+      -
+        image: 'debian:stretch'
     steps:
-    - checkout
-    - run:
-        name: Install build essentials
-        command: apt-get update && apt-get -y install make curl gcc g++ libssl-dev
-          zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev
-          libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev libffi-dev
-    - run:
-        name: Make Python
-        command: make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir
-  publish-github-release:
+      - checkout
+      -
+        run: null
+        name: 'Install build essentials'
+        command: "apt-get update && apt-get -y install make curl gcc g++ libssl-dev\nzlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev libffi-dev"
+      -
+        run: null
+        name: 'Make Python'
+        command: 'make circle_ci_build PYTHON_VERSION=3.8.0PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
+  publish_to_github:
     docker:
-    - image: cibuilds/github:0.10
+      -
+        image: 'cibuilds/github:0.10'
     steps:
-    - attach_workspace:
-        at: /tmp/temp_py_make_dir
-    - run:
-        name: Publish Release on GitHub
-        command: |
-          VERSION=$(python --version)
-          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir
+      -
+        attach_workspace:
+          at: /tmp/temp_py_make_dir
+      - "run\nname: Publish to Github\ncommand: |\nVERSION=$(python --version)\nghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
 workflows:
-  version: 0.1
-  workflow:
+  version: 1
+  build:
     jobs:
-    - build
-    - publish-github-release
+      - build_python
+      - release_to_github
