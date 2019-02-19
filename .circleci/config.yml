@@ -28,4 +28,4 @@ workflows:
   build:
     jobs:
       - build_python
-      - release_to_github
+      - publish_to_github
