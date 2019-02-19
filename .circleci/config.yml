@@ -22,7 +22,7 @@ jobs:
       -
         run:
           name: 'Build GHR'
-          command: 
+          command: |
             go get -u github.com/tcnksm/ghr
             cd $GOSRC/github.com/tcnksm/ghr && go build
       - 
