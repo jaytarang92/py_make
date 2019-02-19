@@ -9,28 +9,34 @@ jobs:
       -
         run:
           name: 'Install build essentials'
-          command: "apt-get update && apt-get -y install make curl gcc g++ libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev libffi-dev"
+          command: "apt-get update && apt-get -y install golang make curl gcc g++ libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev libffi-dev"
+      #-
+        #run:
+          #name: 'Make Python'
+          #command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
       -
         run:
-          name: 'Make Python'
-          command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
-  publish_to_github:
-    docker:
+          name: 'Setup Golang'
+          command: |
+            mkdir -p /tmp/golang /tmp/golang/bin /tmp/golang/src /tmp/golang/pkg
+            export GOPATH=/tmp/golang
+            export GOBIN=$GOPATH/bin
+            export GOSRC=$GOPATH/src
+            export GOPKG=$GOPATH/pkg
       -
-        image: 'cibuilds/github:0.10'
-    steps:
-      -
-        attach_workspace:
-          at: /tmp/temp_py_make_dir
+        run:
+          name: 'Build GHR'
+          command: 
+            go get -u github.com/tcnksm/ghr
+            cd $GOSRC/github.com/tcnksm/ghr && go build
       - 
         run:
           name: 'Publish to Github'
           command: |
             VERSION=$(python --version) 
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
+            cd $GOSRC/github.com/tcnksm/ghr && ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
 workflows:
   version: 2
   build:
     jobs:
       - build_python
-      - publish_to_github
