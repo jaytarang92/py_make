@@ -9,28 +9,21 @@ jobs:
       -
         run:
           name: 'Install build essentials'
-          command: "apt-get update && apt-get -y install git-core golang make curl gcc g++ libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev libffi-dev"
-      #-
-        #run:
-          #name: 'Make Python'
-          #command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
+          command: "apt-get update && apt-get -y install wget make curl gcc g++ libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev libffi-dev"
       -
         run:
-          name: 'Setup Golang'
-          command: |
-            mkdir -p ${GOPATH} ${GOBIN} ${GOPKG} ${GOSRC}
-      -
-        run:
-          name: 'Build GHR'
-          command: |
-            go get github.com/tcnksm/ghr
-            cd $GOSRC/github.com/tcnksm/ghr && go build
+          name: 'Make Python'
+          command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
       - 
         run:
           name: 'Publish to Github'
           command: |
-            VERSION=$(python --version) 
-            cd $GOSRC/github.com/tcnksm/ghr && ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
+            cd /tmp/ghr_dl
+            wget https://github.com/tcnksm/ghr/releases/download/v0.12.0/ghr_v0.12.0_linux_amd64.tar.gz
+            tar -xf ghr_v0.12.0_linux_amd64.tar.gz
+            cd /tmp/temp_py_make_dir
+            VERSION=$(./python --version) 
+            cd /tmp/ghr_dl/ghr_v0.12.0_linux_amd64 && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} /tmp/temp_py_make_dir"
 workflows:
   version: 2
   build:
