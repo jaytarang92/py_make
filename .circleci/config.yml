@@ -13,17 +13,17 @@ jobs:
       -
         run:
           name: 'Make Python'
-          command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a1 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
-      - 
-        run:
-          name: 'Publish to Github'
-          command: |
-            mkdir -p /tmp/ghr_dl
-            cd /tmp/ghr_dl
-            wget https://github.com/tcnksm/ghr/releases/download/v0.12.0/ghr_v0.12.0_linux_amd64.tar.gz
-            tar -xf ghr_v0.12.0_linux_amd64.tar.gz
-            VERSION=$(/home/root/py_*/bin/python3 --version) 
-            cd /tmp/ghr_dl/ghr_v0.12.0_linux_amd64 && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} v0.01 /home/root/py_*
+          command: 'make circle_ci_build PYTHON_VERSION=3.8.0 PYTHON_SUB_VERSION=a2 PYTHON_MAKE_DIR=/tmp/temp_py_make_dir'
+      #- 
+      #  run:
+      #    name: 'Publish to Github'
+      #    command: |
+      #      mkdir -p /tmp/ghr_dl
+      #      cd /tmp/ghr_dl
+      #      wget https://github.com/tcnksm/ghr/releases/download/v0.12.0/ghr_v0.12.0_linux_amd64.tar.gz
+      #      tar -xf ghr_v0.12.0_linux_amd64.tar.gz
+      #      VERSION=$(/home/root/py_*/bin/python3 --version) 
+      #      cd /tmp/ghr_dl/ghr_v0.12.0_linux_amd64 && ./ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} v0.01 /home/root/py_*
 workflows:
   version: 2
   build:
